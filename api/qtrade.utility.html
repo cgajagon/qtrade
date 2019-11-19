@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>qtrade.utility module &#8212; Qtrade 0.1.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="qtrade.questrade module" href="qtrade.questrade.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-qtrade.utility">
+<span id="qtrade-utility-module"></span><h1>qtrade.utility module<a class="headerlink" href="#module-qtrade.utility" title="Permalink to this headline">¶</a></h1>
+<p>Collection of utility functions</p>
+<dl class="function">
+<dt id="qtrade.utility.get_access_token_yaml">
+<code class="sig-prename descclassname">qtrade.utility.</code><code class="sig-name descname">get_access_token_yaml</code><span class="sig-paren">(</span><em class="sig-param">token_yaml</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtrade/utility.html#get_access_token_yaml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qtrade.utility.get_access_token_yaml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility function to read in access token yaml</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>token_yaml</strong> (<em>str</em>) – Path of the token yaml file</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dicitonary with the access token parameters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="qtrade.utility.validate_access_token">
+<code class="sig-prename descclassname">qtrade.utility.</code><code class="sig-name descname">validate_access_token</code><span class="sig-paren">(</span><em class="sig-param">access_token=None</em>, <em class="sig-param">api_server=None</em>, <em class="sig-param">expires_in=None</em>, <em class="sig-param">refresh_token=None</em>, <em class="sig-param">token_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtrade/utility.html#validate_access_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qtrade.utility.validate_access_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate access token</p>
+<p>This function validates the access token and ensures that all requiered
+attributes are provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>access_token</strong> (<em>str, optional</em>) – Access token</p></li>
+<li><p><strong>api_server</strong> (<em>str, optional</em>) – Api server URL</p></li>
+<li><p><strong>expires_in</strong> (<em>int, optional</em>) – Time until token expires</p></li>
+<li><p><strong>refresh_token</strong> (<em>str, optional</em>) – Refresh token</p></li>
+<li><p><strong>token_type</strong> (<em>str, optional</em>) – Token type</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>Exception</strong> – If any of the inputs is None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Qtrade</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Introduction:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Introduction to Qtrade</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">qtrade</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="qtrade.html">qtrade package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="qtrade.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="qtrade.questrade.html">qtrade.questrade module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">qtrade.utility module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="qtrade.html#module-qtrade">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">qtrade</a><ul>
+  <li><a href="qtrade.html">qtrade package</a><ul>
+      <li>Previous: <a href="qtrade.questrade.html" title="previous chapter">qtrade.questrade module</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Jan Borchmann.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/api/qtrade.utility.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

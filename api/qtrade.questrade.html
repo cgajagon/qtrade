@@ -1,0 +1,345 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>qtrade.questrade module &#8212; Qtrade 0.1.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="qtrade.utility module" href="qtrade.utility.html" />
+    <link rel="prev" title="qtrade package" href="qtrade.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-qtrade.questrade">
+<span id="qtrade-questrade-module"></span><h1>qtrade.questrade module<a class="headerlink" href="#module-qtrade.questrade" title="Permalink to this headline">¶</a></h1>
+<p>Core module for Questrade API wrapper</p>
+<dl class="class">
+<dt id="qtrade.questrade.Questrade">
+<em class="property">class </em><code class="sig-prename descclassname">qtrade.questrade.</code><code class="sig-name descname">Questrade</code><span class="sig-paren">(</span><em class="sig-param">access_code=None</em>, <em class="sig-param">token_yaml=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtrade/questrade.html#Questrade"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qtrade.questrade.Questrade" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Questrade baseclass</p>
+<p>This class holds the methods to get access tokens, refresh access tokens as well as get
+stock quotes and portfolio overview. An instance of the class needs to be either initialized
+with an access_code or the path of a access token yaml file.</p>
+<dl class="method">
+<dt id="qtrade.questrade.Questrade.get_access_token">
+<code class="sig-name descname">get_access_token</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtrade/questrade.html#Questrade.get_access_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qtrade.questrade.Questrade.get_access_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method gets the access token from the access code and saves it in access_token.yaml.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Dict with the access token data.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qtrade.questrade.Questrade.get_account_activities">
+<code class="sig-name descname">get_account_activities</code><span class="sig-paren">(</span><em class="sig-param">account_id</em>, <em class="sig-param">start_date</em>, <em class="sig-param">end_date</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtrade/questrade.html#Questrade.get_account_activities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qtrade.questrade.Questrade.get_account_activities" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will get the account activities for a given account ID in a given time
+interval.</p>
+<p>This method will in general return a list of dictionaries, where each dictionary represents
+one trade/account activity. Each dictionary is of the form</p>
+<p><code class="docutils literal notranslate"><span class="pre">{'action':</span> <span class="pre">'Buy',</span>
+<span class="pre">'commission':</span> <span class="pre">-5.01,</span>
+<span class="pre">'currency':</span> <span class="pre">'CAD',</span>
+<span class="pre">'description':</span> <span class="pre">'description</span> <span class="pre">text',</span>
+<span class="pre">'grossAmount':</span> <span class="pre">-1000,</span>
+<span class="pre">'netAmount':</span> <span class="pre">-1005.01,</span>
+<span class="pre">'price':</span> <span class="pre">10,</span>
+<span class="pre">'quantity':</span> <span class="pre">100,</span>
+<span class="pre">'settlementDate':</span> <span class="pre">'2018-08-09T00:00:00.000000-04:00',</span>
+<span class="pre">'symbol':</span> <span class="pre">'XYZ.TO',</span>
+<span class="pre">'symbolId':</span> <span class="pre">1234567,</span>
+<span class="pre">'tradeDate':</span> <span class="pre">'2018-08-07T00:00:00.000000-04:00',</span>
+<span class="pre">'transactionDate':</span> <span class="pre">'2018-08-09T00:00:00.000000-04:00',</span>
+<span class="pre">'type':</span> <span class="pre">'Trades'}</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>account_id</strong> (<em>int</em>) – Accound ID for which the activities will be returned.</p></li>
+<li><p><strong>startDate</strong> (<em>str</em>) – Start date of time period, format YYYY-MM-DD</p></li>
+<li><p><strong>endDate</strong> (<em>str</em>) – End date of time period, format YYYY-MM-DD</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of dictionaries, where each list entry is a dictionary with basic order &amp; dividend
+information.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qtrade.questrade.Questrade.get_account_id">
+<code class="sig-name descname">get_account_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtrade/questrade.html#Questrade.get_account_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qtrade.questrade.Questrade.get_account_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method gets the accounts ID connected to the token.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of account IDs.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qtrade.questrade.Questrade.get_account_positions">
+<code class="sig-name descname">get_account_positions</code><span class="sig-paren">(</span><em class="sig-param">account_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtrade/questrade.html#Questrade.get_account_positions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qtrade.questrade.Questrade.get_account_positions" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will get the positions for the account ID connected to the token.</p>
+<p>The returned data is a list where for each position, a dictionary with the following
+data will be returned:</p>
+<p><code class="docutils literal notranslate"><span class="pre">{'averageEntryPrice':</span> <span class="pre">1000,</span>
+<span class="pre">'closedPnl':</span> <span class="pre">0,</span>
+<span class="pre">'closedQuantity':</span> <span class="pre">0,</span>
+<span class="pre">'currentMarketValue':</span> <span class="pre">3120,</span>
+<span class="pre">'currentPrice':</span> <span class="pre">1040,</span>
+<span class="pre">'isRealTime':</span> <span class="pre">False,</span>
+<span class="pre">'isUnderReorg':</span> <span class="pre">False,</span>
+<span class="pre">'openPnl':</span> <span class="pre">120,</span>
+<span class="pre">'openQuantity':</span> <span class="pre">3,</span>
+<span class="pre">'symbol':</span> <span class="pre">'XYZ',</span>
+<span class="pre">'symbolId':</span> <span class="pre">1234567,</span>
+<span class="pre">'totalCost':</span> <span class="pre">3000}</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>account_id</strong> (<em>int</em>) – Account ID for which the positions will be returned.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of dictionaries, where each list entry is a dictionary with basic position
+information.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qtrade.questrade.Questrade.get_historical_data">
+<code class="sig-name descname">get_historical_data</code><span class="sig-paren">(</span><em class="sig-param">ticker</em>, <em class="sig-param">start_date</em>, <em class="sig-param">end_date</em>, <em class="sig-param">interval</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtrade/questrade.html#Questrade.get_historical_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qtrade.questrade.Questrade.get_historical_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method get gets historical data for a time interval and a defined time frequency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ticker</strong> (<em>str</em>) – Ticker Symbol</p></li>
+<li><p><strong>start_date</strong> (<em>str</em>) – Date in the format YYYY-MM-DD</p></li>
+<li><p><strong>end_date</strong> (<em>str</em>) – Date in the format YYYY-MM-DD</p></li>
+<li><p><strong>interval</strong> (<em>str</em>) – Time frequency, i.e. OneDay.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of historical data for each interval. The list is ordered by date.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qtrade.questrade.Questrade.get_quote">
+<code class="sig-name descname">get_quote</code><span class="sig-paren">(</span><em class="sig-param">tickers</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtrade/questrade.html#Questrade.get_quote"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qtrade.questrade.Questrade.get_quote" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function gets information such as a quote for a single ticker or a list of tickers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tickers</strong> (<em>[str]</em>) – List of tickers</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary with quotes or list of dictionaries with quotes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict or [dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qtrade.questrade.Questrade.refresh_access_token">
+<code class="sig-name descname">refresh_access_token</code><span class="sig-paren">(</span><em class="sig-param">from_yaml=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtrade/questrade.html#Questrade.refresh_access_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qtrade.questrade.Questrade.refresh_access_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method refreshes the access token saved in access_token.yml. This only works if the
+overall access has not yet expired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>from_yaml</strong> (<em>bool, optional [True]</em>) – This parameter controls if the refresh token is sourced from a yaml file (default)
+or if the attribute <cite>access_token</cite> is used.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dict with the access token data.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qtrade.questrade.Questrade.submit_order">
+<code class="sig-name descname">submit_order</code><span class="sig-paren">(</span><em class="sig-param">acct_id</em>, <em class="sig-param">order_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtrade/questrade.html#Questrade.submit_order"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qtrade.questrade.Questrade.submit_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method submits an order to Questrade. Note that currently only partner apps can submit
+orders to the Questrade API. The order information is provided in a dictionary of the form</p>
+<p><code class="docutils literal notranslate"><span class="pre">{'accountNumber':</span> <span class="pre">1234567,</span>
+<span class="pre">'symbolId':</span> <span class="pre">3925293,</span>
+<span class="pre">'quantity':</span> <span class="pre">1,</span>
+<span class="pre">'icebergQuantity':</span> <span class="pre">1,</span>
+<span class="pre">'limitPrice':</span> <span class="pre">57.58,</span>
+<span class="pre">'isAllOrNone':</span> <span class="pre">True,</span>
+<span class="pre">'isAnonymous':</span> <span class="pre">False,</span>
+<span class="pre">'orderType':</span> <span class="pre">'Limit',</span>
+<span class="pre">'timeInForce':</span> <span class="pre">'GoodTillCanceled',</span>
+<span class="pre">'action':</span> <span class="pre">'Buy',</span>
+<span class="pre">'primaryRoute':</span> <span class="pre">'AUTO',</span>
+<span class="pre">'secondaryRoute':</span> <span class="pre">'AUTO'}</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>acct_id</strong> (<em>int</em>) – Account ID for the account to which the order is to be submitted.</p></li>
+<li><p><strong>order_dict</strong> (<em>dict</em>) – Dictionary with the necessary order entries.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary with the API response to the order submission.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qtrade.questrade.Questrade.ticker_information">
+<code class="sig-name descname">ticker_information</code><span class="sig-paren">(</span><em class="sig-param">tickers</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/qtrade/questrade.html#Questrade.ticker_information"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qtrade.questrade.Questrade.ticker_information" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function gets information such as a quote for a single ticker or a list of tickers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tickers</strong> (<em>str or [str]</em>) – List of tickers or a single ticker</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary with ticker information or list of dictionaries with ticker information</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict or [dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Qtrade</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Introduction:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Introduction to Qtrade</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">qtrade</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="qtrade.html">qtrade package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="qtrade.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">qtrade.questrade module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="qtrade.utility.html">qtrade.utility module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="qtrade.html#module-qtrade">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">qtrade</a><ul>
+  <li><a href="qtrade.html">qtrade package</a><ul>
+      <li>Previous: <a href="qtrade.html" title="previous chapter">qtrade package</a></li>
+      <li>Next: <a href="qtrade.utility.html" title="next chapter">qtrade.utility module</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Jan Borchmann.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/api/qtrade.questrade.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
