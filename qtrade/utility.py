@@ -27,7 +27,6 @@ def get_access_token_yaml(token_yaml):
         log.error("Error loading access token from yaml...")
         raise
 
-    validate_access_token(**token_yaml)
     return token_yaml
 
 def validate_access_token(access_token=None, api_server=None, expires_in=None,

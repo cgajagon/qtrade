@@ -3,6 +3,7 @@
 
 import logging
 import requests
+from datetime import datetime, timedelta
 import yaml
 
 from .utility import get_access_token_yaml, validate_access_token
@@ -30,10 +31,23 @@ class Questrade():
 
         if access_code is None:
             self.access_token = get_access_token_yaml(self.token_yaml)
+            # 
+            start_session = datetime.now()
+            # get the date the token was created and the number of seconds that is valid
+            request_date = self.access_token['request_date']
+            expires_in = self.access_token['expires_in']
+            # convert into object and calculate the expiry date
+            expiry_date = datetime.strptime(request_date, "%Y-%m-%d %H:%M:%S") + timedelta(seconds=expires_in)
+            
+            if expiry_date <= start_session: # token is expired
+                self.refresh_access_token(from_yaml=True)
+
+            # create the headers
             self.headers = {'Authorization': self.access_token['token_type'] \
-                + ' ' + self.access_token['access_token']}
+            + ' ' + self.access_token['access_token']}
             # add headers to session
             self.session.headers.update(self.headers)
+
         else:
             self.get_access_token()
 
@@ -79,7 +93,7 @@ class Questrade():
 
         url = TOKEN_URL + str(self.access_code)
         log.info("Getting access token...")
-        data = requests.get(url)
+        data = requests.post(url)
         data.raise_for_status()
         response = data.json()
 
@@ -88,7 +102,7 @@ class Questrade():
 
         self.access_token = response
 
-        #clean the api_server entry of the escape characters
+        # clean the api_server entry of the escape characters
         self.access_token['api_server'] = self.access_token['api_server'].replace("\\", "")
         if self.access_token['api_server'][-1] == '/':
             self.access_token['api_server'] = self.access_token['api_server'][:-1]
@@ -98,6 +112,10 @@ class Questrade():
             + ' ' + self.access_token['access_token']}
 
         self.session.headers.update(self.headers)
+
+        # add the date the token was created
+        now = datetime.now()
+        self.access_token['request_date'] = now.strftime("%Y-%m-%d %H:%M:%S")
 
         # save access token
         with open('access_token.yml', 'w') as yaml_file:
@@ -130,7 +148,7 @@ class Questrade():
 
         url = TOKEN_URL + str(old_access_token['refresh_token'])
         log.info("Refreshing access token...")
-        data = requests.get(url)
+        data = requests.post(url)
         data.raise_for_status()
         response = data.json()
 
@@ -139,7 +157,7 @@ class Questrade():
         # set access token
         self.access_token = response
 
-        #clean the api_server entry of the escape characters
+        # clean the api_server entry of the escape characters
         self.access_token['api_server'] = self.access_token['api_server'].replace("\\", "")
         if self.access_token['api_server'][-1] == '/':
             self.access_token['api_server'] = self.access_token['api_server'][:-1]
@@ -148,8 +166,12 @@ class Questrade():
         self.headers = {'Authorization': self.access_token['token_type'] \
             + ' ' + self.access_token['access_token']}
 
-        #update headers
+        # update headers
         self.session.headers.update(self.headers)
+
+        # add the date the token was created
+        now = datetime.now()
+        self.access_token['request_date'] = now.strftime("%Y-%m-%d %H:%M:%S")
 
         # save access token
         with open('access_token.yml', 'w') as yaml_file:
@@ -307,6 +329,38 @@ class Questrade():
         except Exception:
             print(response)
             raise Exception
+
+        if len(tickers) == 1:
+            symbols = symbols[0]
+
+        return symbols
+    
+    def ticker_ID_information(self, tickers):
+        """
+        This function gets information such as a quote for a single ticker or a list of tickers.
+
+        Parameters
+        ----------
+        tickers: str or [str]
+            List of tickers or a single ticker
+
+        Returns
+        -------
+        dict or [dict]
+            Dictionary with ticker information or list of dictionaries with ticker information
+        """
+        if isinstance(tickers, str):
+            tickers = [tickers]
+
+        payload = {'ids': tickers}
+
+        log.info("Getting ticker data...")
+        response = self._send_message('get', 'symbols', params=payload)
+        try:
+            symbols = response['symbols']
+        except Exception:
+            print(response)
+            raise IndexError
 
         if len(tickers) == 1:
             symbols = symbols[0]
