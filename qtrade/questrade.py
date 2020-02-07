@@ -5,6 +5,7 @@ import logging
 import requests
 from datetime import datetime, timedelta
 import yaml
+from ratelimit import limits, sleep_and_retry
 
 from .utility import get_access_token_yaml, validate_access_token
 
@@ -335,6 +336,9 @@ class Questrade():
 
         return symbols
     
+    ONE_HOUR = 3600
+    @sleep_and_retry
+    @limits(calls=30000, period=ONE_HOUR)
     def ticker_ID_information(self, tickers):
         """
         This function gets information such as a quote for a single ticker or a list of tickers.
